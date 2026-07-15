@@ -1,7 +1,6 @@
 import { ArrowLeft, ArrowRight, Car, Info, TrendingUp, CreditCard, Home } from 'lucide-react';
 import { CarAffordabilityPageData, getCarAffordabilityPageBySlug } from '../data/carAffordabilityPages';
 import { getSeoPageBySlug } from '../data/seoPages';
-import { CAR_AFFORDABILITY_PAGES } from '../data/carAffordabilityPages';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { CarFinanceCalculator } from '../components/CarFinanceCalculator';
 import { AdBanner } from '../components/AdBanner';

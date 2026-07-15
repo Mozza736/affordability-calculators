@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { PiggyBank, TrendingDown, Calendar, ShieldCheck, AlertTriangle, XCircle } from 'lucide-react';
+import { TrendingDown, Calendar, ShieldCheck, AlertTriangle, XCircle } from 'lucide-react';
 import { InputField } from './InputField';
 
 interface SavingsInputs {

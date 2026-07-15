@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * check-sitemap.js
- * Verifies that every URL in vite-plugin-sitemap.ts has a matching route in App.tsx,
- * and that every data-driven slug is covered.
+ * Verifies sitemap coverage, uniqueness, and canonical correctness.
+ * Fails for: missing routes, extra routes, duplicate URLs, invalid priority values.
  * Run with: node scripts/check-sitemap.js
  */
 
@@ -13,66 +13,131 @@ function readFile(path) {
   return readFileSync(path, 'utf8');
 }
 
-// ─── Extract static paths from vite-plugin-sitemap.ts ────────────────────────
+// ─── Read source files ────────────────────────────────────────────────────────
 
 const sitemapSrc = readFile(resolve('vite-plugin-sitemap.ts'));
+const appSrc     = readFile(resolve('src/App.tsx'));
 
-// Extract all path: '...' strings from the staticRoutes array
-const staticPathMatches = [...sitemapSrc.matchAll(/\bpath:\s*['"]([^'"]+)['"]/g)];
-const sitemapStaticPaths = staticPathMatches.map(m => m[1]);
+// ─── Extract all paths declared in vite-plugin-sitemap.ts ────────────────────
+// Matches both staticRoutes entries and data-mapped paths (path: '...')
+const sitemapStaticPaths = [...sitemapSrc.matchAll(/\bpath:\s*['"]([^'"]+)['"]/g)].map(m => m[1]);
 
-// ─── Extract routes handled in App.tsx ───────────────────────────────────────
+// ─── Derive all routes the router actually handles ────────────────────────────
 
-const appSrc = readFile(resolve('src/App.tsx'));
+// Explicit pathname === '...' checks in App.tsx
+const appExplicitRoutes = [...appSrc.matchAll(/pathname\s*===\s*['"]([^'"]+)['"]/g)]
+  .map(m => m[1])
+  .filter(r => r !== '');
 
-// pathname === '/...' or pathname === '' style checks
-const routeMatches = [...appSrc.matchAll(/pathname\s*===\s*['"]([^'"]*)['"]/g)];
-const appRoutes = routeMatches.map(m => m[1]).filter(r => r !== '');
+// App.tsx handles '/' via pathname === '' or pathname === '/'
+const appHandlesRoot = appSrc.includes("pathname === '/'") || appSrc.includes("pathname === ''");
 
-// Also detect data-array patterns (getSeoPageBySlug, getLocationPageBySlug, etc.)
+// Data-driven lookups — these cover all slugs from the respective data files
 const hasSeoLookup      = appSrc.includes('getSeoPageBySlug');
 const hasLocationLookup = appSrc.includes('getLocationPageBySlug');
 const hasTakeHomeLookup = appSrc.includes('getTakeHomePageBySlug');
 const hasCarLookup      = appSrc.includes('getCarAffordabilityPageBySlug');
 
-// ─── Check that every sitemap static path has a matching App.tsx route ────────
+// All valid routes the app can render (explicit + data-driven slugs)
+// We load the actual slug lists to detect any sitemap entries that don't exist in data
+import('../src/data/seoPages.js').catch(() => null); // not available at runtime in plain node
+// Instead, parse slugs from the TS source files directly
+function extractSlugs(filePath, pattern) {
+  const src = readFile(resolve(filePath));
+  return [...src.matchAll(pattern)].map(m => m[1]);
+}
+
+const seoSlugs      = extractSlugs('src/data/seoPages.ts',            /slug:\s*['"]([^'"]+)['"]/g);
+const locationSlugs = extractSlugs('src/data/locationPages.ts',       /slug:\s*['"]([^'"]+)['"]/g);
+const takeHomeSlugs = extractSlugs('src/data/takeHomePages.ts',       /slug:\s*['"]([^'"]+)['"]/g);
+const carSlugs      = extractSlugs('src/data/carAffordabilityPages.ts', /slug:\s*['"]([^'"]+)['"]/g);
+
+const allDataSlugs = new Set([
+  ...seoSlugs,
+  ...locationSlugs,
+  ...takeHomeSlugs,
+  ...carSlugs,
+]);
+
+// All routes the app can handle
+const allHandledRoutes = new Set([
+  '/',
+  ...appExplicitRoutes,
+  ...[...allDataSlugs].map(s => `/${s}`),
+]);
+
+// All paths that appear in the sitemap (static + data-driven)
+// For data-driven entries, sitemapStaticPaths only has explicit path: entries from staticRoutes
+// The data arrays generate paths from slug values — verify those via data sources
+const sitemapAllPaths = [
+  ...sitemapStaticPaths,
+  ...seoSlugs.map(s => `/${s}`),
+  ...locationSlugs.map(s => `/${s}`),
+  ...takeHomeSlugs.map(s => `/${s}`),
+  ...carSlugs.map(s => `/${s}`),
+];
 
 let errors = 0;
-let warnings = 0;
 
-console.log('\n── Static sitemap paths vs App.tsx routes ───────────────────');
-let missingRoutes = 0;
-for (const path of sitemapStaticPaths) {
-  if (path === '/') {
-    // '/' is handled by pathname === '' || pathname === '/'
-    const ok = appSrc.includes("pathname === '/'") || appSrc.includes('pathname === ""');
-    if (!ok) {
-      console.error(`  ✗ No route for: ${path}`);
-      errors++;
-      missingRoutes++;
-    } else {
-      console.log(`  ✓ ${path}`);
-    }
-    continue;
-  }
-  if (appRoutes.includes(path)) {
-    console.log(`  ✓ ${path}`);
-  } else {
-    console.error(`  ✗ No route found in App.tsx for: ${path}`);
+// ─── 1. Duplicate URL detection ───────────────────────────────────────────────
+
+console.log('\n── Duplicate URL check ──────────────────────────────────────');
+const seen = new Map();
+for (const path of sitemapAllPaths) {
+  seen.set(path, (seen.get(path) ?? 0) + 1);
+}
+let dupeCount = 0;
+for (const [path, count] of seen.entries()) {
+  if (count > 1) {
+    console.error(`  ✗ Duplicate URL (${count}×): ${path}`);
     errors++;
-    missingRoutes++;
+    dupeCount++;
   }
 }
-if (missingRoutes === 0) console.log('  ✓ All static paths have matching routes');
+if (dupeCount === 0) console.log(`  ✓ No duplicate URLs (${sitemapAllPaths.length} total)`);
 
-// ─── Check dynamic data arrays are used in App.tsx ───────────────────────────
+// ─── 2. Missing routes — sitemap path has no matching handler ─────────────────
+
+console.log('\n── Missing route check (sitemap path not handled by app) ────');
+let missingCount = 0;
+for (const path of sitemapAllPaths) {
+  if (!allHandledRoutes.has(path)) {
+    console.error(`  ✗ Sitemap contains a path with no app route: ${path}`);
+    errors++;
+    missingCount++;
+  }
+}
+if (missingCount === 0) console.log('  ✓ All sitemap paths have a matching app route');
+
+// ─── 3. Extra routes — app handles routes absent from sitemap ─────────────────
+// Only flag explicit routes (not data-driven); data-driven coverage verified above
+
+console.log('\n── Extra route check (explicit app route absent from sitemap) ');
+const sitemapPathSet = new Set(sitemapAllPaths);
+let extraCount = 0;
+
+if (appHandlesRoot && !sitemapPathSet.has('/')) {
+  console.error('  ✗ App handles / but sitemap is missing it');
+  errors++;
+  extraCount++;
+}
+for (const route of appExplicitRoutes) {
+  if (!sitemapPathSet.has(route)) {
+    console.error(`  ✗ App route not in sitemap: ${route}`);
+    errors++;
+    extraCount++;
+  }
+}
+if (extraCount === 0) console.log('  ✓ All explicit app routes appear in sitemap');
+
+// ─── 4. Dynamic data lookups present in App.tsx ──────────────────────────────
 
 console.log('\n── Dynamic data lookups in App.tsx ──────────────────────────');
 const dynamicChecks = [
-  { label: 'SEO pages (getSeoPageBySlug)',            ok: hasSeoLookup,      pattern: 'getSeoPageBySlug' },
-  { label: 'Location pages (getLocationPageBySlug)',  ok: hasLocationLookup, pattern: 'getLocationPageBySlug' },
-  { label: 'Take-home pages (getTakeHomePageBySlug)', ok: hasTakeHomeLookup, pattern: 'getTakeHomePageBySlug' },
-  { label: 'Car pages (getCarAffordabilityPageBySlug)', ok: hasCarLookup,    pattern: 'getCarAffordabilityPageBySlug' },
+  { label: 'SEO pages (getSeoPageBySlug)',              ok: hasSeoLookup },
+  { label: 'Location pages (getLocationPageBySlug)',    ok: hasLocationLookup },
+  { label: 'Take-home pages (getTakeHomePageBySlug)',   ok: hasTakeHomeLookup },
+  { label: 'Car pages (getCarAffordabilityPageBySlug)', ok: hasCarLookup },
 ];
 for (const { label, ok } of dynamicChecks) {
   if (ok) {
@@ -83,9 +148,9 @@ for (const { label, ok } of dynamicChecks) {
   }
 }
 
-// ─── Check sitemap contains key landmark URLs ─────────────────────────────────
+// ─── 5. Required landmark URLs ────────────────────────────────────────────────
 
-console.log('\n── Required landmark URLs in sitemap ────────────────────────');
+console.log('\n── Required landmark URLs ───────────────────────────────────');
 const requiredPaths = [
   '/',
   '/calculators',
@@ -98,15 +163,28 @@ const requiredPaths = [
   '/terms',
 ];
 for (const p of requiredPaths) {
-  if (sitemapStaticPaths.includes(p)) {
+  if (sitemapPathSet.has(p)) {
     console.log(`  ✓ ${p}`);
   } else {
-    console.error(`  ✗ Missing from sitemap: ${p}`);
+    console.error(`  ✗ Missing required URL: ${p}`);
     errors++;
   }
 }
 
-// ─── Check priority values are valid ─────────────────────────────────────────
+// ─── 6. Canonical path format (each path must start with /) ─────────────────
+
+console.log('\n── Canonical path format check ──────────────────────────────');
+let badCanonical = 0;
+for (const path of sitemapAllPaths) {
+  if (!path.startsWith('/')) {
+    console.error(`  ✗ Path does not start with /: ${path}`);
+    errors++;
+    badCanonical++;
+  }
+}
+if (badCanonical === 0) console.log('  ✓ All paths start with /');
+
+// ─── 7. Priority values valid (0.0–1.0) ──────────────────────────────────────
 
 console.log('\n── Sitemap priority values (must be 0.0–1.0) ───────────────');
 const priorityMatches = [...sitemapSrc.matchAll(/priority:\s*['"]([^'"]+)['"]/g)];
@@ -121,13 +199,22 @@ for (const m of priorityMatches) {
 }
 if (invalidPriority === 0) console.log('  ✓ All priority values are valid');
 
-// ─── Summary ──────────────────────────────────────────────────────────────────
+// ─── 8. URL count summary ─────────────────────────────────────────────────────
+
+console.log('\n── URL count ────────────────────────────────────────────────');
+console.log(`  Static routes:    ${sitemapStaticPaths.length}`);
+console.log(`  SEO pages:        ${seoSlugs.length}`);
+console.log(`  Location pages:   ${locationSlugs.length}`);
+console.log(`  Take-home pages:  ${takeHomeSlugs.length}`);
+console.log(`  Car pages:        ${carSlugs.length}`);
+console.log(`  Total:            ${sitemapAllPaths.length}`);
+
+// ─── Result ───────────────────────────────────────────────────────────────────
 
 console.log(`\n─────────────────────────────────────────────────────────────`);
-console.log(`  ${errors} error(s)  |  ${warnings} warning(s)`);
 if (errors > 0) {
-  console.error(`\nFAIL: ${errors} sitemap error(s) detected.\n`);
+  console.error(`FAIL: ${errors} sitemap error(s) detected.\n`);
   process.exit(1);
 } else {
-  console.log(`\nPASS: Sitemap coverage check passed.\n`);
+  console.log(`PASS: Sitemap checks passed (${sitemapAllPaths.length} URLs, 0 errors).\n`);
 }

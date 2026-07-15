@@ -12,7 +12,7 @@ interface SavingsRunoutPageProps {
 export function SavingsRunoutPage({ navigate }: SavingsRunoutPageProps) {
   usePageTitle(
     'How Long Will My Savings Last? – UK Calculator (2026)',
-    'Use our free UK savings runout calculator to find out how long your savings will last in 2026. Enter your balance, monthly spending, and interest rate for an instant result.',
+    'Use our free UK savings runout calculator to find out how long your savings will last in 2026. Enter your balance and monthly spending for an instant result.',
     '/how-long-will-my-savings-last'
   );
   return (

@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Car, CreditCard, Info } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Car, Info } from 'lucide-react';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { CarFinanceCalculator } from '../components/CarFinanceCalculator';
 import { AdBanner } from '../components/AdBanner';

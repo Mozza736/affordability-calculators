@@ -63,7 +63,7 @@ export const LOCATION_PAGES: LocationPageData[] = [
       'Average house prices in Birmingham are approximately £230,000, placing the salary multiple at around 6.6 times a £35,000 income. Areas like Harborne and Moseley are more expensive, while suburbs such as Erdington and Perry Barr offer more accessible entry points. Birmingham\'s ongoing regeneration — boosted by investment around the 2022 Commonwealth Games — has steadily pushed prices upward.',
     metaTitle: 'Buy in Birmingham on £35k Salary? 2026 Affordability',
     metaDescription:
-      'Can you afford a house in Birmingham on a £35k salary in 2026? Find out instantly with our free UK affordability calculator. See what you can realistically borrow.',
+      'Can you afford a house in Birmingham on a £35k salary in 2026? Find out instantly with our free UK affordability calculator. See what you can borrow.',
     relatedSlugs: [
       'can-i-afford-a-house-in-manchester-on-40k',
       'can-i-afford-a-house-in-nottingham-on-35k',
@@ -82,7 +82,7 @@ export const LOCATION_PAGES: LocationPageData[] = [
       'The average house price in Leeds is around £220,000 — approximately 6.3 times a £35,000 salary. Popular areas like Headingley and Chapel Allerton sit above this average, while Beeston, Armley, and parts of East Leeds offer more affordable options. Leeds benefits from a strong jobs market and good transport links, supporting sustained demand and steady price growth.',
     metaTitle: 'Buy in Leeds on £35k Salary? Instant Result (2026)',
     metaDescription:
-      'Can you afford a house in Leeds on a £35k salary in 2026? Get an instant result with our free UK affordability calculator. See local prices and mortgage options.',
+      'Can you afford a house in Leeds on a £35k salary in 2026? Get an instant result. See local prices, mortgage options, and deposit guidance.',
     relatedSlugs: [
       'can-i-afford-a-house-in-manchester-on-40k',
       'can-i-afford-a-house-in-birmingham-on-35k',
@@ -121,7 +121,7 @@ export const LOCATION_PAGES: LocationPageData[] = [
       'The average house price in Liverpool is around £175,000 — approximately 5.8 times a £30,000 salary. While still above the standard 4.5× lending multiple, Liverpool is among the most accessible cities for first-time buyers in the UK. Areas like Wavertree, Knotty Ash, and parts of North Liverpool offer good value, while Woolton and Mossley Hill command higher prices.',
     metaTitle: 'Buy in Liverpool on £30k Salary? 2026 Affordability',
     metaDescription:
-      'Can you afford a house in Liverpool on a £30k salary in 2026? Find out instantly. Liverpool is one of the UK\'s most affordable cities — see what you can buy.',
+      'Can you afford a house in Liverpool on a £30k salary in 2026? Liverpool is one of the UK\'s most affordable cities — see what you can buy.',
     relatedSlugs: [
       'can-i-afford-a-house-in-manchester-on-40k',
       'can-i-afford-a-house-in-glasgow-on-30k',
@@ -335,7 +335,7 @@ export const LONDON_SALARY_PAGES: LocationPageData[] = [
       'On £70,000, standard 4.5× lending gives you up to £315,000. Adding a 20% deposit of £87,500 (a significant but not impossible savings target over several years) creates a combined budget of £402,500. At this level, buyers can compete for two-bedroom flats in regenerating inner-outer zones: Croydon, Newham, Bexley, and Barking all have stock in this range. Some two-bedroom houses in the far outer zones start here too. Specialist lenders offering 5.5× push the borrowing to £385,000, meaning a 15% deposit unlocks nearly £440,000 — approaching the inner zone flat market.',
     metaTitle: 'Can I Afford a House in London on £70k? (2026)',
     metaDescription:
-      'Can you afford a house in London on a £70k salary in 2026? Instant affordability result. London prices are 85% above the UK average — see your realistic options.',
+      'Can you afford a house in London on a £70k salary in 2026? Instant affordability result. See which London boroughs are within reach on this income.',
     relatedSlugs: [
       'can-i-afford-a-house-in-london-on-60k',
       'can-i-afford-a-house-in-london-on-80k',
@@ -392,7 +392,7 @@ export const LONDON_SALARY_PAGES: LocationPageData[] = [
       'Note: on £100,000, your personal allowance begins to taper, which reduces your take-home pay more sharply than the salary increase suggests. Despite this, a 4.5× mortgage on £100,000 supports up to £450,000 in borrowing. With a 15% deposit of £90,000, your total budget reaches £540,000 — covering the full London average. This unlocks family-sized properties in areas like Lewisham, Haringey, and Enfield, as well as quality two and three-bedroom flats in Zone 2 boroughs including Brixton, Dalston, and Camberwell. Adding a specialist lender at 5.5× and a slightly larger deposit moves the budget to £600,000+, bringing parts of Clapham and Stoke Newington into view.',
     metaTitle: 'Can I Afford a House in London on £100k? (2026)',
     metaDescription:
-      'Can you afford a house in London on a £100k salary in 2026? Instant result. At £100k, the average London home is within reach — see your full affordability picture.',
+      'Can you afford a house in London on a £100k salary in 2026? At £100k, the average London home is within reach — see your full affordability picture.',
     relatedSlugs: [
       'can-i-afford-a-house-in-london-on-90k',
       'can-i-afford-a-house-in-london-on-120k',
@@ -411,7 +411,7 @@ export const LONDON_SALARY_PAGES: LocationPageData[] = [
       'At £120,000 your personal allowance is fully withdrawn (it tapers to zero between £100,000 and £125,140), so your effective marginal tax rate on earnings above £100k is 60%. Despite this, a 4.5× mortgage supports borrowing of up to £540,000 — enough to fund the average London home outright without any deposit. Adding a 10–15% deposit takes your budget to £594,000–£621,000, covering: well-presented houses and larger flats in Clapham, Greenwich, Stoke Newington, and Hammersmith; period conversions in Kensal Rise and Honor Oak; and new builds in Zone 1 fringe areas. Almost all of London becomes theoretically accessible with specialist lending at this income.',
     metaTitle: 'Can I Afford a House in London on £120k? (2026)',
     metaDescription:
-      'Can you afford a house in London on a £120k salary in 2026? At this income, the average London home is within standard lending limits — get your full result instantly.',
+      'Can you afford a house in London on a £120k salary in 2026? At this income, the average London home is within standard lending limits — get your result.',
     relatedSlugs: [
       'can-i-afford-a-house-in-london-on-100k',
       'can-i-afford-a-house-in-london-on-150k',

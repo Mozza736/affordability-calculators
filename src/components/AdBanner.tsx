@@ -4,6 +4,6 @@ interface AdBannerProps {
 }
 
 // Invisible spacer until ad inventory is live — renders nothing visible.
-export function AdBanner({ position: _position, className = '' }: AdBannerProps) {
+export function AdBanner({ className = '' }: AdBannerProps) {
   return <div className={className} />;
 }

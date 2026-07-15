@@ -10,7 +10,7 @@ import { AdBanner } from '../components/AdBanner';
 import { CTASection } from '../components/CTASection';
 import { RelatedLinks } from '../components/RelatedLinks';
 import { formatCurrency } from '../utils/calculatorLogic';
-import { PoundSterling, Wallet } from 'lucide-react';
+import { Wallet } from 'lucide-react';
 
 interface HouseAffordabilityPageProps {
   navigate: (path: string) => void;

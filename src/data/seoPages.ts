@@ -62,7 +62,7 @@ export const SEO_PAGES: SeoPageData[] = [
     salary: 30000,
     metaTitle: '£200k House on £30k Salary – Can You Afford It? (2026)',
     metaDescription:
-      'Can you afford a £200k house on a £30k salary in the UK? Get an instant 2026 affordability result with our free calculator. See deposit requirements and monthly costs.',
+      'Can you afford a £200k house on a £30k salary in the UK? Get an instant 2026 result. See deposit requirements, lending limits, and monthly costs.',
     relatedSlugs: [
       'can-i-afford-250k-house-on-40k-salary-uk',
       'can-i-afford-300k-house-on-45k-salary-uk',
@@ -235,7 +235,7 @@ export const SEO_PAGES: SeoPageData[] = [
     salary: 50000,
     metaTitle: '£340k House on £50k Salary – Affordable in 2026?',
     metaDescription:
-      'Can you afford a £340k house on a £50k salary in the UK? Get an instant 2026 affordability result with our free calculator. See deposit requirements and monthly costs.',
+      'Can you afford a £340k house on a £50k salary in the UK? Get an instant 2026 result. See deposit requirements, lending limits, and monthly costs.',
     relatedSlugs: [
       'can-i-afford-330k-house-on-50k-salary-uk',
       'can-i-afford-350k-house-on-50k-salary-uk',
@@ -285,7 +285,7 @@ export const SEO_PAGES: SeoPageData[] = [
       'Seven times salary is where even specialist lenders start to raise an eyebrow. On £50k, £350k is genuinely hard to buy alone without either a deposit of £125k or more, or a second income on the application. That said, it is not unheard of — the right combination of clean credit, stable employment, and low outgoings can still open doors with the right broker.',
     housePrice: 350000,
     salary: 50000,
-    metaTitle: '£350k House on £50k Salary: Reality Check (2026) – Can You Actually Afford It?',
+    metaTitle: '£350k House on £50k Salary – Can You Afford It? (2026)',
     metaDescription:
       'Is a £350k house affordable on a £50k salary in the UK? Find out instantly with our free 2026 calculator, built around UK lending standards.',
     relatedSlugs: [
@@ -388,7 +388,7 @@ export const SEO_PAGES: SeoPageData[] = [
     salary: 50000,
     metaTitle: '£360k House on £50k Salary – Real Affordability (2026)',
     metaDescription:
-      'Can you afford a £360k house on a £50k salary in the UK? Get an instant 2026 result. See deposit requirements, lending limits, and what your monthly payments would look like.',
+      'Can you afford a £360k house on a £50k salary in the UK? Get an instant 2026 result. See deposit requirements, lending limits, and monthly costs.',
     relatedSlugs: [
       'can-i-afford-340k-house-on-50k-salary-uk',
       'can-i-afford-350k-house-on-50k-salary-uk',
@@ -440,7 +440,7 @@ export const SEO_PAGES: SeoPageData[] = [
     salary: 50000,
     metaTitle: '£375k House on £50k Salary – Can You Afford It? (2026)',
     metaDescription:
-      'Can you afford a £375k house on a £50k salary in the UK? Get an honest 2026 affordability estimate. See what deposit you would need and what monthly payments look like.',
+      'Can you afford a £375k house on a £50k salary in the UK? Get an honest 2026 estimate. See deposit requirements and monthly payment scenarios.',
     relatedSlugs: [
       'can-i-afford-350k-house-on-50k-salary-uk',
       'can-i-afford-360k-house-on-50k-salary-uk',

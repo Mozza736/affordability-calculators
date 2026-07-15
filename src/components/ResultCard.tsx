@@ -1,4 +1,7 @@
-import { Video as LucideIcon } from 'lucide-react';
+import type { LucideProps } from 'lucide-react';
+import type { FC } from 'react';
+
+type LucideIcon = FC<LucideProps>;
 
 interface ResultCardProps {
   icon: LucideIcon;

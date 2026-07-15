@@ -95,13 +95,22 @@ function collectFromData() {
   const files = readdirSync(DATA_DIR).filter(f => f.endsWith('.ts'));
   for (const file of files) {
     const src = readFile(join(DATA_DIR, file));
-    const titleMatches = [...src.matchAll(/metaTitle:\s*['"]([^'"]+)['"]/g)];
-    const descMatches  = [...src.matchAll(/metaDescription:\s*['"]([^'"]+)['"]/g)];
-    titleMatches.forEach((m, i) => {
+    const titleMatches = [...src.matchAll(/metaTitle:\s*['"]([^'"\\]|\\[\s\S])*['"]/g)].map(m => m[0].replace(/^metaTitle:\s*['"]/, '').replace(/['"]$/, '').replace(/\\'/g, "'"));
+    const descMatches  = [...src.matchAll(/metaDescription:\s*\n\s*['"]([^'"\\]|\\[\s\S])*['"]/g)].map(m => {
+      return m[0].replace(/^metaDescription:\s*\n\s*['"]/, '').replace(/['"]$/, '').replace(/\\'/g, "'");
+    });
+    const titleMatchesRaw = [...src.matchAll(/metaTitle:\s*['"]([^'"]+)['"]/g)];
+    const descMatchesRaw  = [...src.matchAll(/metaDescription:\s*\n?\s*['"]([^'"\\]|\\[^])*['"]/g)];
+    titleMatchesRaw.forEach((m, i) => {
+      const rawDesc = descMatchesRaw[i]?.[0] ?? '';
+      const cleanDesc = rawDesc
+        .replace(/^metaDescription:\s*\n?\s*['"]/, '')
+        .replace(/['"]$/, '')
+        .replace(/\\'/g, "'");
       results.push({
         file: `data/${file}`,
         title: m[1],
-        description: descMatches[i]?.['1'] || '(none)',
+        description: cleanDesc || '(none)',
         isDynamic: false,
       });
     });

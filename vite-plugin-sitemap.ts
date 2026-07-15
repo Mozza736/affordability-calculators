@@ -15,7 +15,6 @@ function buildSitemap(): string {
     { path: '/about', priority: '0.5', changefreq: 'monthly' },
     { path: '/get-your-plan', priority: '0.7', changefreq: 'monthly' },
     { path: '/how-long-will-my-savings-last', priority: '0.8', changefreq: 'monthly' },
-    { path: '/can-i-afford-a-house-in-london-on-50k', priority: '0.9', changefreq: 'monthly' },
     { path: '/mortgage-options', priority: '0.8', changefreq: 'monthly' },
     { path: '/car-affordability', priority: '0.9', changefreq: 'monthly' },
     { path: '/how-much-should-i-spend-on-a-car-uk', priority: '0.9', changefreq: 'monthly' },
