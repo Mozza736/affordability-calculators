@@ -40,16 +40,23 @@ const hasCarLookup      = appSrc.includes('getCarAffordabilityPageBySlug');
 
 // All valid routes the app can render (explicit + data-driven slugs)
 // We load the actual slug lists to detect any sitemap entries that don't exist in data
-import('../src/data/seoPages.js').catch(() => null); // not available at runtime in plain node
-// Instead, parse slugs from the TS source files directly
+// Parse slugs from the TS source files directly
 function extractSlugs(filePath, pattern) {
   const src = readFile(resolve(filePath));
   return [...src.matchAll(pattern)].map(m => m[1]);
 }
 
+// Take-home slugs use template literals — extract gross values and derive slugs
+function extractTakeHomeSlugs(filePath) {
+  const src = readFile(resolve(filePath));
+  // Match buildPage(GROSS, ...) calls — first numeric argument
+  const grossValues = [...src.matchAll(/buildPage\(\s*(\d+),/g)].map(m => parseInt(m[1], 10));
+  return grossValues.map(g => `take-home-pay-${g / 1000}k-uk`);
+}
+
 const seoSlugs      = extractSlugs('src/data/seoPages.ts',            /slug:\s*['"]([^'"]+)['"]/g);
 const locationSlugs = extractSlugs('src/data/locationPages.ts',       /slug:\s*['"]([^'"]+)['"]/g);
-const takeHomeSlugs = extractSlugs('src/data/takeHomePages.ts',       /slug:\s*['"]([^'"]+)['"]/g);
+const takeHomeSlugs = extractTakeHomeSlugs('src/data/takeHomePages.ts');
 const carSlugs      = extractSlugs('src/data/carAffordabilityPages.ts', /slug:\s*['"]([^'"]+)['"]/g);
 
 const allDataSlugs = new Set([
@@ -171,7 +178,38 @@ for (const p of requiredPaths) {
   }
 }
 
-// ─── 6. Canonical path format (each path must start with /) ─────────────────
+// ─── 6. Take-home-pay URL verification ───────────────────────────────────────
+
+console.log('\n── Take-home-pay URL check ──────────────────────────────────');
+const expectedTakeHomeUrls = [
+  '/take-home-pay-30k-uk',
+  '/take-home-pay-40k-uk',
+  '/take-home-pay-50k-uk',
+  '/take-home-pay-60k-uk',
+  '/take-home-pay-70k-uk',
+  '/take-home-pay-80k-uk',
+  '/take-home-pay-90k-uk',
+  '/take-home-pay-100k-uk',
+  '/take-home-pay-120k-uk',
+  '/take-home-pay-150k-uk',
+];
+let takeHomeMissing = 0;
+for (const url of expectedTakeHomeUrls) {
+  if (sitemapPathSet.has(url)) {
+    console.log(`  ✓ ${url}`);
+  } else {
+    console.error(`  ✗ Missing take-home URL: ${url}`);
+    errors++;
+    takeHomeMissing++;
+  }
+}
+if (takeHomeMissing === 0 && takeHomeSlugs.length === expectedTakeHomeUrls.length) {
+  console.log(`  ✓ All ${expectedTakeHomeUrls.length} take-home-pay URLs present`);
+} else if (takeHomeSlugs.length !== expectedTakeHomeUrls.length) {
+  console.warn(`  ! take-home slug count mismatch: found ${takeHomeSlugs.length}, expected ${expectedTakeHomeUrls.length}`);
+}
+
+// ─── 7. Canonical path format (each path must start with /) ─────────────────
 
 console.log('\n── Canonical path format check ──────────────────────────────');
 let badCanonical = 0;
