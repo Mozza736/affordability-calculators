@@ -1,5 +1,7 @@
 import { ArrowLeft, PoundSterling, ArrowRight, MapPin, Info } from 'lucide-react';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useStructuredData } from '../hooks/useStructuredData';
+import { calculatorSchema } from '../utils/structuredData';
 import { useCalculator } from '../hooks/useCalculator';
 import { InputField } from '../components/InputField';
 import { ResultCard } from '../components/ResultCard';
@@ -23,8 +25,14 @@ const otherCalculators = [
 export function RentAffordabilityPage({ navigate }: RentAffordabilityPageProps) {
   usePageTitle(
     'Rent Affordability Calculator UK (2026) – How Much Should I Spend?',
-    'Find out how much rent you can afford in the UK in 2026. Free calculator using the 30% income rule and your real monthly expenses.'
+    'Find out how much rent you can afford in the UK in 2026. Free calculator using the 30% income rule and your real monthly expenses.',
+    '/rent-affordability'
   );
+  useStructuredData(calculatorSchema({
+    name: 'Rent Affordability Calculator UK (2026)',
+    description: 'Find out how much rent you can afford in the UK in 2026.',
+    url: '/rent-affordability',
+  }));
 
   const { inputs, results, updateInput } = useCalculator();
 

@@ -1,5 +1,7 @@
 import { ArrowLeft, Home, ArrowRight, MapPin, Info } from 'lucide-react';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useStructuredData } from '../hooks/useStructuredData';
+import { calculatorSchema } from '../utils/structuredData';
 import { useCalculator } from '../hooks/useCalculator';
 import { InputField } from '../components/InputField';
 import { ResultCard } from '../components/ResultCard';
@@ -23,8 +25,14 @@ const otherCalculators = [
 export function HouseAffordabilityPage({ navigate }: HouseAffordabilityPageProps) {
   usePageTitle(
     'House Affordability Calculator UK (2026) – What Can You Afford?',
-    'Find out the maximum house price you can realistically afford in the UK in 2026. Free calculator based on your salary, deposit, and monthly outgoings.'
+    'Find out the maximum house price you can realistically afford in the UK in 2026. Free calculator based on your salary, deposit, and monthly outgoings.',
+    '/house-affordability'
   );
+  useStructuredData(calculatorSchema({
+    name: 'House Affordability Calculator UK (2026)',
+    description: 'Find out the maximum house price you can realistically afford in the UK in 2026.',
+    url: '/house-affordability',
+  }));
 
   const { inputs, results, updateInput } = useCalculator();
   const houseRangeMin = results.maxHousePrice * 0.88;

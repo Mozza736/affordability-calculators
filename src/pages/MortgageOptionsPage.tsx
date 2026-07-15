@@ -44,7 +44,8 @@ const steps = [
 export function MortgageOptionsPage({ navigate }: MortgageOptionsPageProps) {
   usePageTitle(
     'Your Next Steps – Mortgage Options | UK Affordability',
-    'See your next steps for getting a mortgage in the UK. Compare providers and get matched with the right deal based on your affordability.'
+    'See your next steps for getting a mortgage in the UK. Compare providers and get matched with the right deal based on your affordability.',
+    '/mortgage-options'
   );
 
   const [email, setEmail] = useState('');

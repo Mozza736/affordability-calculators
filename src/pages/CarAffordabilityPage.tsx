@@ -99,7 +99,7 @@ function RelatedHousingPages({
 }
 
 export function CarAffordabilityPage({ page, navigate }: CarAffordabilityPageProps) {
-  usePageTitle(page.metaTitle, page.metaDescription);
+  usePageTitle(page.metaTitle, page.metaDescription, `/${page.slug}`);
 
   const defaultMonthly = Math.round((page.monthlyBudgetMin + page.monthlyBudgetMax) / 2 / 25) * 25;
 

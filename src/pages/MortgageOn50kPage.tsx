@@ -1,5 +1,7 @@
 import { ArrowLeft, ArrowRight, Home, Info, CheckCircle, AlertTriangle, XCircle, TrendingUp } from 'lucide-react';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useStructuredData } from '../hooks/useStructuredData';
+import { calculatorSchema, faqSchema } from '../utils/structuredData';
 import { MainCalculator } from '../components/MainCalculator';
 import { CTASection } from '../components/CTASection';
 import { RelatedLinks } from '../components/RelatedLinks';
@@ -68,8 +70,17 @@ const faqs = [
 export function MortgageOn50kPage({ navigate }: Props) {
   usePageTitle(
     'How much mortgage can I afford on £50k? UK Guide',
-    'Estimate how much mortgage you could get on a £50k salary in the UK, including realistic lender ranges, deposit impact and monthly affordability.'
+    'Estimate how much mortgage you could get on a £50k salary in the UK, including realistic lender ranges, deposit impact and monthly affordability.',
+    '/how-much-mortgage-can-i-afford-on-50k-salary-uk'
   );
+  useStructuredData([
+    calculatorSchema({
+      name: 'How much mortgage can I afford on £50k? UK Guide',
+      description: 'Estimate how much mortgage you could get on a £50k salary in the UK, including realistic lender ranges, deposit impact and monthly affordability.',
+      url: '/how-much-mortgage-can-i-afford-on-50k-salary-uk',
+    }),
+    faqSchema(faqs.map((f) => ({ question: f.q, answer: f.a }))),
+  ]);
 
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10">

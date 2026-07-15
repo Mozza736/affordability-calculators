@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { SeoPageData, getSeoPageBySlug, FaqItem, BuyerScenario, MonthlyCostContext } from '../data/seoPages';
 import { getLocationPageBySlug } from '../data/locationPages';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useStructuredData } from '../hooks/useStructuredData';
+import { calculatorSchema, faqSchema } from '../utils/structuredData';
 import { MainCalculator } from '../components/MainCalculator';
 import { AdBanner } from '../components/AdBanner';
 import { CTASection } from '../components/CTASection';
@@ -260,7 +262,13 @@ function FaqAccordion({ faqs }: { faqs: FaqItem[] }) {
 
 export function SeoCalculatorPage({ page, navigate }: SeoCalculatorPageProps) {
   const { housePrice, salary, h1, shortAnswer, relatedSlugs, metaTitle, metaDescription, richSections } = page;
-  usePageTitle(metaTitle, metaDescription);
+  usePageTitle(metaTitle, metaDescription, `/${page.slug}`);
+  useStructuredData([
+    calculatorSchema({ name: metaTitle, description: metaDescription, url: `/${page.slug}` }),
+    ...(richSections?.faqs && richSections.faqs.length > 0
+      ? [faqSchema(richSections.faqs.map((f) => ({ question: f.question, answer: f.answer })))]
+      : []),
+  ]);
   const verdict = getAffordabilityVerdict(housePrice, salary);
   const cfg = confidenceConfig[verdict.confidence];
   const VerdictIcon = cfg.icon;

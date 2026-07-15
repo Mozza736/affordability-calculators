@@ -1,5 +1,7 @@
 import { ArrowDown, ArrowRight, ShieldCheck, Zap, BarChart3, Home, Car, TrendingUp, BookOpen, Database, Users, PiggyBank } from 'lucide-react';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useStructuredData } from '../hooks/useStructuredData';
+import { websiteSchema, calculatorSchema } from '../utils/structuredData';
 import { MainCalculator } from '../components/MainCalculator';
 import { WhatThisMeans } from '../components/WhatThisMeans';
 import { PopularCalculators } from '../components/PopularCalculators';
@@ -59,8 +61,17 @@ const popularQuestions = [
 export function HomePage({ navigate }: HomePageProps) {
   usePageTitle(
     'UK Affordability Calculator – What Can You Really Afford? (2026)',
-    'Find out exactly what you can afford in 2026. Free UK calculators for house, rent, car, and savings — instant results based on your salary and outgoings.'
+    'Find out exactly what you can afford in 2026. Free UK calculators for house, rent, car, and savings — instant results based on your salary and outgoings.',
+    '/'
   );
+  useStructuredData([
+    websiteSchema(),
+    calculatorSchema({
+      name: 'UK Affordability Calculator',
+      description: 'Free UK affordability calculator. Find out what house, rent, or car you can afford based on your salary and expenses.',
+      url: '/',
+    }),
+  ]);
   return (
     <main>
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-8">

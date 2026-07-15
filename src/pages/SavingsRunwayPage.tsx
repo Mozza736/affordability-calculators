@@ -12,7 +12,8 @@ interface SavingsRunwayPageProps {
 export function SavingsRunwayPage({ navigate }: SavingsRunwayPageProps) {
   usePageTitle(
     'Savings Runway Calculator UK (2026) – How Long Will My Money Last?',
-    'Find out exactly how long your savings will last in the UK in 2026. Free calculator based on your balance, monthly spending, and any income you receive.'
+    'Find out exactly how long your savings will last in the UK in 2026. Free calculator based on your balance, monthly spending, and any income you receive.',
+    '/savings-runway'
   );
 
   return (

@@ -1,5 +1,7 @@
 import { ArrowLeft, ArrowRight, Car, CreditCard, Info, TrendingUp } from 'lucide-react';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useStructuredData } from '../hooks/useStructuredData';
+import { calculatorSchema } from '../utils/structuredData';
 import { CarFinanceCalculator } from '../components/CarFinanceCalculator';
 import { AdBanner } from '../components/AdBanner';
 import { CTASection } from '../components/CTASection';
@@ -35,8 +37,14 @@ const budgetTiers = [
 export function CarAffordabilityHubPage({ navigate }: CarAffordabilityHubPageProps) {
   usePageTitle(
     'How Much Car Can I Afford Per Month in the UK? (2026 Guide)',
-    'Use our free UK car finance calculator to find out what car you can afford per month in 2026. Based on PCP and HP finance — the way most UK buyers actually buy.'
+    'Use our free UK car finance calculator to find out what car you can afford per month in 2026. Based on PCP and HP finance — the way most UK buyers actually buy.',
+    '/car-affordability'
   );
+  useStructuredData(calculatorSchema({
+    name: 'UK Car Finance Calculator (2026)',
+    description: 'Find out what car you can afford per month in the UK. Based on PCP and HP finance.',
+    url: '/car-affordability',
+  }));
 
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10">

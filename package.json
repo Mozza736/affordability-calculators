@@ -8,7 +8,11 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "check:calculator": "node scripts/check-calculator.js",
+    "check:metadata": "node scripts/check-metadata.js",
+    "check:sitemap": "node scripts/check-sitemap.js",
+    "check": "npm run build && npm run typecheck && npm run lint && npm run check:calculator && npm run check:metadata && npm run check:sitemap"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

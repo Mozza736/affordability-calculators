@@ -104,7 +104,7 @@ export function TakeHomePayPage({ page, navigate }: TakeHomePayPageProps) {
     metaTitle,
     metaDescription,
   } = page;
-  usePageTitle(metaTitle, metaDescription);
+  usePageTitle(metaTitle, metaDescription, `/${page.slug}`);
 
   const totalDeductions = incomeTax + nationalInsurance;
   const effectiveRate = getEffectiveRate(grossSalary, incomeTax, nationalInsurance);

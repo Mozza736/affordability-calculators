@@ -24,7 +24,8 @@ const trustPoints = [
 export function GetYourPlanPage({ navigate }: GetYourPlanPageProps) {
   usePageTitle(
     'Get Your Free Affordability Plan – UK Calculator (2026)',
-    'Get a free personalised UK affordability plan in 2026. Tell us your salary and expenses and we\'ll show you exactly what you can realistically afford to buy.'
+    'Get a free personalised UK affordability plan in 2026. Tell us your salary and expenses and we\'ll show you exactly what you can realistically afford to buy.',
+    '/get-your-plan'
   );
   const [form, setForm] = useState<FormState>({
     firstName: '',

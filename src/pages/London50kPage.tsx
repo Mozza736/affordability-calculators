@@ -149,7 +149,7 @@ interface Props {
 }
 
 export function London50kPage({ navigate }: Props) {
-  usePageTitle(META_TITLE, META_DESC);
+  usePageTitle(META_TITLE, META_DESC, '/can-i-afford-a-house-in-london-on-50k');
 
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10">

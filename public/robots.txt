@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://affordabilitycalculators.co.uk/sitemap.xml
+
+# Block crawling of internal/utility paths
+Disallow: /api/
+Disallow: /_/

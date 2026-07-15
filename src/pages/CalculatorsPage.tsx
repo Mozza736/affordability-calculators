@@ -12,7 +12,8 @@ interface CalculatorsPageProps {
 export function CalculatorsPage({ navigate }: CalculatorsPageProps) {
   usePageTitle(
     'Free UK Affordability Calculators – House, Rent & More (2026)',
-    'Browse all free UK affordability calculators for 2026. Check house, rent, car, and savings affordability — instant results based on your real salary and expenses.'
+    'Browse all free UK affordability calculators for 2026. Check house, rent, car, and savings affordability — instant results based on your real salary and expenses.',
+    '/calculators'
   );
   const categories = [
     { icon: Home, label: 'House Affordability', color: 'text-primary-600 bg-primary-50' },

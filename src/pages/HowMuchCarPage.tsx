@@ -21,7 +21,8 @@ const salaryGuides = [
 export function HowMuchCarPage({ navigate }: HowMuchCarPageProps) {
   usePageTitle(
     'How Much Should I Spend on a Car in the UK? (2026 Guide)',
-    'Find out how much you should spend on a car in the UK in 2026. Budget guidance by salary level, with a free car finance calculator to estimate your monthly payments.'
+    'Find out how much you should spend on a car in the UK in 2026. Budget guidance by salary level, with a free car finance calculator to estimate your monthly payments.',
+    '/how-much-should-i-spend-on-a-car-uk'
   );
 
   return (

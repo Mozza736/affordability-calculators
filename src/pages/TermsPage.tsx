@@ -28,7 +28,8 @@ function Section({ icon, title, children }: SectionProps) {
 export function TermsPage({ navigate }: TermsPageProps) {
   usePageTitle(
     'Terms of Use – UK Affordability Calculators',
-    'Read the terms of use for UK Affordability Calculators. Our tools provide indicative estimates only and do not constitute financial advice.'
+    'Read the terms of use for UK Affordability Calculators. Our tools provide indicative estimates only and do not constitute financial advice.',
+    '/terms'
   );
   return (
     <main className="max-w-3xl mx-auto px-4 sm:px-6 py-10">

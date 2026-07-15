@@ -29,7 +29,8 @@ const relatedLinks = [
 export function Is400MonthCarAffordablePage({ navigate }: Props) {
   usePageTitle(
     'Is £400 a Month Car Affordable in the UK? (2026 Guide)',
-    'Is £400/month a sensible car payment in the UK? We break down whether £400/month is affordable based on your salary, what car it gets you, and when it becomes too much.'
+    'Is £400/month a sensible car payment in the UK? We break down whether £400/month is affordable based on your salary, what car it gets you, and when it becomes too much.',
+    '/is-400-a-month-car-affordable-uk'
   );
 
   return (

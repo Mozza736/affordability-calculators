@@ -9,7 +9,8 @@ interface AboutPageProps {
 export function AboutPage({ navigate }: AboutPageProps) {
   usePageTitle(
     'About Us – UK Affordability Calculators | Free Tools (2026)',
-    'Learn about UK Affordability Calculators — free, no-nonsense tools built to give honest answers about house, rent, and car affordability based on UK lending standards.'
+    'Learn about UK Affordability Calculators — free, no-nonsense tools built to give honest answers about house, rent, and car affordability based on UK lending standards.',
+    '/about'
   );
   const values = [
     {

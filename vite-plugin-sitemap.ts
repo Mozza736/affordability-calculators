@@ -25,6 +25,8 @@ function buildSitemap(): string {
     { path: '/is-300-a-month-car-affordable-uk', priority: '0.9', changefreq: 'monthly' },
     { path: '/is-400-a-month-car-affordable-uk', priority: '0.9', changefreq: 'monthly' },
     { path: '/how-much-mortgage-can-i-afford-on-50k-salary-uk', priority: '0.9', changefreq: 'monthly' },
+    { path: '/privacy-policy', priority: '0.3', changefreq: 'yearly' },
+    { path: '/terms', priority: '0.3', changefreq: 'yearly' },
   ];
 
   const seoRoutes = SEO_PAGES.map((p) => ({

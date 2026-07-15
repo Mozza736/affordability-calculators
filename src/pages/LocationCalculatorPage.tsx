@@ -1,6 +1,8 @@
 import { ArrowLeft, ArrowRight, MapPin, TrendingUp, Home, Info, CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
 import { LocationPageData, getLocationPageBySlug } from '../data/locationPages';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { useStructuredData } from '../hooks/useStructuredData';
+import { calculatorSchema } from '../utils/structuredData';
 import { MainCalculator } from '../components/MainCalculator';
 import { AdBanner } from '../components/AdBanner';
 import { CTASection } from '../components/CTASection';
@@ -98,7 +100,8 @@ function RelatedLocations({ slugs, navigate }: RelatedLocationsProps) {
 
 export function LocationCalculatorPage({ page, navigate }: LocationCalculatorPageProps) {
   const { city, salary, avgHousePrice, h1, intro, localContext, relatedSlugs, metaTitle, metaDescription } = page;
-  usePageTitle(metaTitle, metaDescription);
+  usePageTitle(metaTitle, metaDescription, `/${page.slug}`);
+  useStructuredData(calculatorSchema({ name: metaTitle, description: metaDescription, url: `/${page.slug}` }));
   const band = getAffordabilityBand(salary, avgHousePrice);
   const BandIcon = band.icon;
   const multiple = avgHousePrice / salary;

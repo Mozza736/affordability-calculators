@@ -28,7 +28,8 @@ function Section({ icon, title, children }: SectionProps) {
 export function PrivacyPolicyPage({ navigate }: PrivacyPolicyPageProps) {
   usePageTitle(
     'Privacy Policy – UK Affordability Calculators',
-    'Read our privacy policy. UK Affordability Calculators does not store or sell your data. All calculations are processed locally in your browser.'
+    'Read our privacy policy. UK Affordability Calculators does not store or sell your data. All calculations are processed locally in your browser.',
+    '/privacy-policy'
   );
   return (
     <main className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
