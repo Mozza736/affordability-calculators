@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-slate-900;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .input-range {
+    @apply w-full appearance-none bg-slate-200 rounded-full h-1.5 cursor-pointer;
+    outline: none;
+  }
+
+  .input-range::-webkit-slider-thumb {
+    @apply appearance-none w-5 h-5 bg-primary-600 rounded-full cursor-pointer border-2 border-white;
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+
+  .input-range::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.5);
+  }
+
+  .input-range::-moz-range-thumb {
+    @apply w-5 h-5 bg-primary-600 rounded-full cursor-pointer border-2 border-white;
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4);
+  }
+
+  .input-range::-webkit-slider-runnable-track {
+    @apply rounded-full;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
