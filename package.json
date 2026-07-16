@@ -14,7 +14,7 @@
     "check:metadata": "node scripts/check-metadata.js",
     "check:sitemap": "node scripts/check-sitemap.js",
     "check:prerender": "node scripts/check-prerender.js",
-    "check": "npm run build && npm run prerender && npm run typecheck && npm run lint && npm run check:calculator && npm run check:metadata && npm run check:sitemap && npm run check:prerender"
+    "check": "npm run build && npm run typecheck && npm run lint && npm run check:calculator && npm run check:metadata && npm run check:sitemap && npm run check:prerender"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
