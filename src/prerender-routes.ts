@@ -125,11 +125,59 @@ const staticRoutes: RouteMetadata[] = [
   },
   {
     path: '/car-affordability',
-    title: 'How Much Car Can I Afford Per Month in the UK? (2026 Guide)',
-    description: 'Use our free UK car finance calculator to find out what car you can afford per month in 2026. Based on PCP and HP finance — the way most UK buyers actually buy.',
+    title: 'Car Affordability Calculator UK (2026) – Free Instant Results',
+    description: 'Free UK car affordability calculator. Enter your monthly budget, deposit and APR to see what car you can afford — PCP, HP and running costs explained.',
     canonical: `${BASE_URL}/car-affordability`,
-    h1: 'How much car can I afford per month in the UK?',
-    jsonLd: [appSchema('UK Car Finance Calculator (2026)', 'Find out what car you can afford per month in the UK.', '/car-affordability')],
+    h1: 'UK car affordability calculator — how much can you afford per month?',
+    jsonLd: [
+      appSchema('Car Affordability Calculator UK (2026)', 'Free UK car affordability calculator. Enter your monthly budget, deposit and APR to see what car you can afford — PCP, HP and running costs explained.', '/car-affordability'),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'How much car can I afford based on my salary in the UK?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Keep your car finance payment at 10–12% of your net monthly income. On a £30k salary (take-home ~£2,050/month), that suggests a £200–£250/month budget. On a £40k salary (~£2,550/month), around £255–£310/month. On a £50k salary (~£3,150/month), a comfortable range is £315–£380/month. Use the calculator above to see the car value that payment unlocks based on your deposit, APR, and term length.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What factors affect how much car I can afford?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The key factors are: your monthly disposable income after housing costs and other commitments; the deposit you can put down (a larger deposit reduces your loan and lowers monthly payments); the APR on your finance deal (typically 6–12% on used cars in the UK); and the term length (longer terms lower monthly payments but increase total interest). Your total monthly motoring costs — finance, insurance, fuel or charging, and servicing — will typically run £150–£400 more than the finance payment alone.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What is the difference between PCP and HP car finance?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: "PCP (Personal Contract Purchase) finances only part of the car's value. You pay a deposit, fixed monthly payments, then choose to return the car, pay a balloon payment to own it, or part-exchange. Monthly costs are lower. HP (Hire Purchase) finances the full car value — higher monthly payments but you own the car outright at the end, with no balloon payment and no mileage limits.",
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What APR should I expect on UK car finance in 2026?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Typical APRs in 2026 range from 6% to 12% on used cars, and 4% to 9% on new cars, depending on your credit score and the lender. Some manufacturers offer promotional 0% APR deals on specific new models. This calculator uses approximately 8% APR as a realistic working baseline for most buyers. Always compare rates from multiple lenders before signing a finance agreement.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What should I budget for total monthly motoring costs?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Beyond the finance payment, budget for car insurance (typically £50–£150/month), fuel or charging (£80–£200/month depending on mileage and vehicle type), road tax (£0–£30/month), and maintenance including tyres (allow £30–£80/month averaged over the year). On top of a £300/month finance payment, total monthly motoring costs can reach £500–£700/month — factor these in before committing to a deal.',
+            },
+          },
+        ],
+      },
+    ],
   },
   {
     path: '/how-much-should-i-spend-on-a-car-uk',
