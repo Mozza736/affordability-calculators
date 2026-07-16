@@ -194,6 +194,75 @@ for (const path of SPOT_CHECK_PATHS) {
   }
 }
 
+// ─── FAQ schema vs visible content check ─────────────────────────────────────
+
+console.log('\n── FAQ schema vs visible content ────────────────────────────────────────────');
+
+const carFilePath = resolve(root, 'dist/car-affordability/index.html');
+if (!existsSync(carFilePath)) {
+  console.error('  ✗ dist/car-affordability/index.html not found — run npm run build');
+  errors++;
+} else {
+  const carHtml = readFileSync(carFilePath, 'utf8');
+
+  // Extract all JSON-LD blocks
+  const ldBlocks = [];
+  const ldRe = /<script type="application\/ld\+json">([^<]+)<\/script>/g;
+  let ldMatch;
+  while ((ldMatch = ldRe.exec(carHtml)) !== null) {
+    try { ldBlocks.push(JSON.parse(ldMatch[1])); } catch { /* skip malformed */ }
+  }
+
+  const faqSchema = ldBlocks.find((b) => b['@type'] === 'FAQPage');
+  if (!faqSchema) {
+    console.error('  ✗ No FAQPage JSON-LD found in dist/car-affordability/index.html');
+    errors++;
+  } else {
+    const schemaQuestions = (faqSchema.mainEntity || []).map((e) => e.name);
+    const schemaAnswers   = (faqSchema.mainEntity || []).map((e) => e.acceptedAnswer?.text ?? '');
+
+    let faqErrors = 0;
+
+    // Every schema question must appear as visible text in the HTML
+    for (let i = 0; i < schemaQuestions.length; i++) {
+      const q = schemaQuestions[i];
+      if (!carHtml.includes(q)) {
+        console.error(`  ✗ FAQ schema question not found in visible HTML:`);
+        console.error(`      "${q}"`);
+        faqErrors++;
+        errors++;
+      }
+    }
+
+    // Every schema answer must appear as visible text in the HTML
+    for (let i = 0; i < schemaAnswers.length; i++) {
+      const a = schemaAnswers[i];
+      if (a && !carHtml.includes(a)) {
+        console.error(`  ✗ FAQ schema answer not found in visible HTML (question ${i + 1}):`);
+        console.error(`      "${a.substring(0, 80)}…"`);
+        faqErrors++;
+        errors++;
+      }
+    }
+
+    // Count how many schema questions appear as <h3> elements (FAQ-specific check)
+    const faqH3Count = schemaQuestions.filter((q) => {
+      const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp(`<h3[^>]*>${escaped}<\\/h3>`).test(carHtml);
+    }).length;
+
+    if (faqH3Count !== schemaQuestions.length) {
+      console.error(`  ✗ Only ${faqH3Count}/${schemaQuestions.length} schema questions found as <h3> elements`);
+      faqErrors++;
+      errors++;
+    }
+
+    if (faqErrors === 0) {
+      console.log(`  ✓ All ${schemaQuestions.length} FAQ questions and answers match between schema and visible HTML`);
+    }
+  }
+}
+
 // ─── Final result ─────────────────────────────────────────────────────────────
 
 console.log(`\n  Checked: ${checked} / ${allRoutes.length}  |  Errors: ${errors}`);

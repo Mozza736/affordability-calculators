@@ -6,6 +6,7 @@ import { CarFinanceCalculator } from '../components/CarFinanceCalculator';
 import { AdBanner } from '../components/AdBanner';
 import { CTASection } from '../components/CTASection';
 import { RelatedLinks } from '../components/RelatedLinks';
+import { CAR_AFFORDABILITY_FAQS } from '../data/carAffordabilityFaqs';
 
 interface CarAffordabilityHubPageProps {
   navigate: (path: string) => void;
@@ -41,34 +42,6 @@ const budgetTiers = [
   },
 ];
 
-const CAR_FAQS = [
-  {
-    question: 'How much car can I afford based on my salary in the UK?',
-    answer:
-      'Keep your car finance payment at 10–12% of your net monthly income. On a £30k salary (take-home ~£2,050/month), that suggests a £200–£250/month budget. On a £40k salary (~£2,550/month), around £255–£310/month. On a £50k salary (~£3,150/month), a comfortable range is £315–£380/month. Use the calculator above to see the car value that payment unlocks based on your deposit, APR, and term length.',
-  },
-  {
-    question: 'What factors affect how much car I can afford?',
-    answer:
-      'The key factors are: your monthly disposable income after housing costs and other commitments; the deposit you can put down (a larger deposit reduces your loan and lowers monthly payments); the APR on your finance deal (typically 6–12% on used cars in the UK); and the term length (longer terms lower monthly payments but increase total interest). Your total monthly motoring costs — finance, insurance, fuel or charging, and servicing — will typically run £150–£400 more than the finance payment alone.',
-  },
-  {
-    question: 'What is the difference between PCP and HP car finance?',
-    answer:
-      "PCP (Personal Contract Purchase) finances only part of the car's value. You pay a deposit, fixed monthly payments, then choose to return the car, pay a balloon payment to own it, or part-exchange. Monthly costs are lower. HP (Hire Purchase) finances the full car value — higher monthly payments but you own the car outright at the end, with no balloon payment and no mileage limits.",
-  },
-  {
-    question: 'What APR should I expect on UK car finance in 2026?',
-    answer:
-      'Typical APRs in 2026 range from 6% to 12% on used cars, and 4% to 9% on new cars, depending on your credit score and the lender. Some manufacturers offer promotional 0% APR deals on specific new models. This calculator uses approximately 8% APR as a realistic working baseline for most buyers. Always compare rates from multiple lenders before signing a finance agreement.',
-  },
-  {
-    question: 'What should I budget for total monthly motoring costs?',
-    answer:
-      'Beyond the finance payment, budget for car insurance (typically £50–£150/month), fuel or charging (£80–£200/month depending on mileage and vehicle type), road tax (£0–£30/month), and maintenance including tyres (allow £30–£80/month averaged over the year). On top of a £300/month finance payment, total monthly motoring costs can reach £500–£700/month — factor these in before committing to a deal.',
-  },
-];
-
 export function CarAffordabilityHubPage({ navigate }: CarAffordabilityHubPageProps) {
   usePageTitle(
     'Car Affordability Calculator UK (2026) – Free Instant Results',
@@ -81,7 +54,7 @@ export function CarAffordabilityHubPage({ navigate }: CarAffordabilityHubPagePro
       description: DESCRIPTION,
       url: '/car-affordability',
     }),
-    faqSchema(CAR_FAQS),
+    faqSchema(CAR_AFFORDABILITY_FAQS),
   ]);
 
   return (
@@ -105,7 +78,7 @@ export function CarAffordabilityHubPage({ navigate }: CarAffordabilityHubPagePro
           UK car affordability calculator — how much can you afford per month?
         </h1>
         <p className="text-slate-600 leading-relaxed">
-          Enter your monthly budget, deposit, and term length to instantly see the car value you can realistically finance in the UK. The calculator uses a typical 8% APR — the going rate for most PCP and HP deals — and shows total cost over the term so there are no surprises.
+          Enter your monthly budget, deposit, and term length to instantly see the car value you can realistically finance in the UK. The calculator uses 8% APR as an illustrative starting figure — actual rates vary by lender, credit profile, and vehicle. Results are estimates for planning purposes only, not financial advice.
         </p>
       </div>
 
@@ -131,7 +104,7 @@ export function CarAffordabilityHubPage({ navigate }: CarAffordabilityHubPagePro
         </div>
         <div className="bg-white border border-slate-200 rounded-2xl p-6 mb-4">
           <p className="text-sm text-slate-700 leading-relaxed mb-4">
-            The practical rule is to keep your monthly car finance payment at <strong>10–12% of your net (take-home) monthly income</strong>, and your total monthly motoring costs — finance plus insurance, fuel, and servicing — below 20%. For most UK salaries, the comfortable finance-only budget works out as:
+            The following figures are general budgeting guidance only — not lending criteria or financial advice. They show what portion of take-home pay a car finance payment represents at common salary levels.
           </p>
           <div className="overflow-x-auto rounded-xl border border-slate-100">
             <table className="w-full text-sm">
@@ -168,7 +141,7 @@ export function CarAffordabilityHubPage({ navigate }: CarAffordabilityHubPagePro
           <div className="mt-4 flex items-start gap-2.5 text-xs text-slate-400 leading-relaxed">
             <Info size={12} className="flex-shrink-0 mt-0.5" />
             <span>
-              10% covers the finance payment only. 15% includes some headroom for insurance and fuel. Total motoring costs (finance + running costs) can reach 20% of take-home at higher budget levels. See individual salary guides:{' '}
+              10% column: finance payment only. 15% column: finance with some headroom for running costs. These are illustrative planning figures — not affordability assessments or financial advice. See individual salary guides:{' '}
               <button onClick={() => navigate('/what-car-can-i-afford-on-30k-salary-uk')} className="text-primary-600 hover:underline">£30k</button>,{' '}
               <button onClick={() => navigate('/what-car-can-i-afford-on-40k-salary-uk')} className="text-primary-600 hover:underline">£40k</button>,{' '}
               <button onClick={() => navigate('/what-car-can-i-afford-on-50k-salary-uk')} className="text-primary-600 hover:underline">£50k</button>.
@@ -178,7 +151,7 @@ export function CarAffordabilityHubPage({ navigate }: CarAffordabilityHubPagePro
 
         <div className="bg-primary-50 border border-primary-100 rounded-2xl p-5">
           <p className="text-sm text-slate-700 leading-relaxed">
-            <strong className="text-slate-900">The practical rule:</strong> If your car finance payment exceeds 15% of your take-home pay you will likely feel financial pressure — especially if you have a mortgage or rent on top. Staying at or below 10–12% gives you a comfortable buffer for insurance, fuel, and the unexpected.
+            <strong className="text-slate-900">General budgeting guidance:</strong> Many personal finance guides suggest keeping a car finance payment below 10–15% of take-home pay to maintain a healthy budget — particularly if you also have mortgage or rent commitments. This is a planning heuristic, not a lending rule or regulated financial advice.
           </p>
         </div>
       </section>
@@ -309,7 +282,7 @@ export function CarAffordabilityHubPage({ navigate }: CarAffordabilityHubPagePro
           <h2 className="text-xl font-bold text-slate-900">Frequently asked questions</h2>
         </div>
         <div className="space-y-4">
-          {CAR_FAQS.map(({ question, answer }) => (
+          {CAR_AFFORDABILITY_FAQS.map(({ question, answer }) => (
             <div key={question} className="bg-white border border-slate-200 rounded-2xl p-6">
               <h3 className="text-sm font-bold text-slate-900 mb-2">{question}</h3>
               <p className="text-sm text-slate-600 leading-relaxed">{answer}</p>
