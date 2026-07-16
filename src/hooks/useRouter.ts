@@ -1,7 +1,17 @@
 import { useState, useEffect } from 'react';
 
+// SSR: global injected by prerender script; undefined in browser
+declare const __SSR_PATHNAME__: string | undefined;
+
+function getInitialPathname(): string {
+  if (typeof window === 'undefined') {
+    return typeof __SSR_PATHNAME__ !== 'undefined' ? __SSR_PATHNAME__ : '/';
+  }
+  return window.location.pathname;
+}
+
 export function useRouter() {
-  const [pathname, setPathname] = useState(window.location.pathname);
+  const [pathname, setPathname] = useState(getInitialPathname);
 
   useEffect(() => {
     const handlePopState = () => setPathname(window.location.pathname);
